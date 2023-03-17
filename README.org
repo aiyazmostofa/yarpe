@@ -1,0 +1,85 @@
+* YARPE
+Yet Another Reverse Polish Emulator
+[[screenshot.png]]
+
+** Description
+YARPE is an assembly program (written in C) for the TI-84 Plus CE that emulates the Reverse Polish Notation interfaces found on some Hewlett Packard calculators.
+YARPE is specifically designed to tackle the numerical input questions found on the UIL Calculator Applications contest.
+YARPE doesn't have support for symbolic expressions or complex numbers.
+YARPE supports arithmetic, trigonometric, and logarithmic operations.
+YARPE supports a 100 level stack.
+
+** Installation
+This is an assembly program, so:
+- If your calculator version is >= 5.5, you will need to do somethings before you can run the program.
+  Here is a [[https://www.youtube.com/watch?v=abB0ZEdQ1rs][video]] that shows the process.
+Else
+- You can just send the program using TI Connect CE like you would normally.
+
+You will also need to install this. [[https://github.com/CE-Programming/libraries/releases/latest][clibs.8xg]]
+** Demonstration
+[[https://youtu.be/h7ITNTshO9Q][Video]]
+** Controls
+*** Primary Functions
+These are functions that require no shift (second) key to be pressed first.
+
+| Function            | Keys           |
+|---------------------+----------------|
+| Push                | `enter`        |
+| Add                 | `+`            |
+| Subtract            | `-` (Subtract) |
+| Negate              | `-` (Negate)   |
+| Multiply            | `×`            |
+| Divide              | `÷`            |
+| Exponent            | `^`            |
+| Backspace           | `)` or `del`   |
+| Clear Input         | `clear`        |
+| Square              | `x^2`          |
+| Log Base 10         | `log`          |
+| Natural Log         | `ln`           |
+| Sin                 | `sin`          |
+| Cos                 | `cos`          |
+| Tan                 | `tan`          |
+| Decimal             | `.`            |
+| Radians / Degree    | `apps`         |
+| Scientific / Normal | `mode`         |
+| Reciprocal          | `x^-1`         |
+| EE (Read Below)     | `,`            |
+
+For the EE function, say you want to type `3.65×10^4`, here are the buttons you want to press:
+`3` `.` `6` `5` `enter` `4` `,`
+
+*** Secondary Functions
+These functions can be accessed when the second mode is activated (just like in the normal TI interface).
+To activate the second mode, you can of course press the `2nd` key.
+But you can also press the `(`, which is a lot easier to reach.
+
+| Function     | Keys          |
+|--------------+---------------|
+| Undo         | `enter`       |
+| Exit         | `)` or `mode` |
+| e (constant) | `÷`           |
+| π (constant) | `^`           |
+| Arcsin       | `sin`         |
+| Arccos       | `cos`         |
+| Arctan       | `tan`         |
+| Square Root  | `x^2`         |
+| 10^          | `log`         |
+| e^           | `ln`          |
+
+** Build
+Install the toolchain using this link [[https://ce-programming.github.io/toolchain/static/getting-started.html][here]]. 
+Follow the instructions from the same link for building the hello world project but replace the example project with this repository.
+
+** Credits
+- [[https://github.com/arjvik/RPN-Ti84][RPN-Ti84]]: 
+I used this project to learn a lot of my reverse polish notation.
+I implemented a lot of the same functionality and features from this program into YARPE.
+
+- [[https://github.com/CE-Programming/toolchain][CE C/C++ Toolchain]]:
+This made developing for the TI-84 Plus CE a very nice experience.
+I got the speed of an assembly program while programming in a high level language like C.
+The documentation is also great.
+
+** License
+[[file:LICENSE][GNU General Public License v3.0]]
