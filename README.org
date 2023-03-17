@@ -43,10 +43,10 @@ These are functions that require no shift (second) key to be pressed first.
 | Radians / Degree    | =apps=         |
 | Scientific / Normal | =mode=         |
 | Reciprocal          | =x^-1=         |
-| EE (Read Below)     | = , =          |
+| EE (Read Below)     | =comma=     |
 
 For the EE function, say you want to type =3.65×10^4=, here are the buttons you want to press:
-=3= =.= =6= =5= =enter= =4= = , =
+=3= =.= =6= =5= =enter= =4= =comma=
 
 *** Secondary Functions
 These functions can be accessed when the second mode is activated (just like in the normal TI interface).
