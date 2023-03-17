@@ -13,8 +13,7 @@ YARPE supports a 100 level stack.
 This is an assembly program, so:
 - If your calculator version is >= 5.5, you will need to do somethings before you can run the program.
   Here is a [[https://www.youtube.com/watch?v=abB0ZEdQ1rs][video]] that shows the process.
-Else
-- You can just send the program using TI Connect CE like you would normally.
+- If your calculator version is <= 5.4, you can just send the program using TI Connect CE like you would normally.
 
 You will also need to install this. [[https://github.com/CE-Programming/libraries/releases/latest][clibs.8xg]]
 ** Demonstration
