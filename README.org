@@ -67,6 +67,18 @@ But you can also press the =(=, which is a lot easier to reach.
 | 10^          | =log=         |
 | e^           | =ln=          |
 
+*** Color Themes
+Color Themes can be set by pressing =alpha= then =window= and then you can scroll through the themes
+using the up key. To set the selected theme, press the enter key.
+
+| Color Theme  | Index |
+|--------------+-------|
+| Default      | 0     |
+| Monkeytype   | 1     |
+| Dracula      | 2     |
+| Gruvbox      | 3     |
+| Vscode       | 4     |
+
 ** Build
 Install the toolchain using this link [[https://ce-programming.github.io/toolchain/static/getting-started.html][here]]. 
 Follow the instructions from the same link for building the hello world project but replace the example project with this repository.

@@ -6,6 +6,7 @@
 #define BG 0
 #define FGP 1
 #define FGS 2
+#define TXT 3
 
 #define STACK_SIZE 100
 #define INPUT_SIZE 20
@@ -67,11 +68,32 @@ void begin();
 void end();
 bool step();
 void draw();
+void set_theme();
 
 // Settings
 bool second;
+bool alpha;
 bool scientific;
 bool radians;
+
+// Themes
+char themes [5][4][3] = {
+    // Layout: Background, Primary Foreground, Secondary Foreground, Text Color
+
+    // Default
+    {{0, 0, 0}, {255, 255, 255}, {155, 211, 221}, {255, 255, 255}},
+    // Monkeytype Classic (Serika Dark)
+    {{50, 52, 55}, {226, 183, 20}, {100, 102, 105}, {226, 183, 20}},
+    // Dracula
+    {{40, 42, 54}, {98, 114, 164}, {68, 71, 90}, {189, 147, 249}},
+    // Gruvbox
+    {{40, 40, 40}, {152, 151, 26}, {251, 73, 52}, {235, 219, 178}},
+    // Vscode
+    {{30, 30, 30},{212, 212, 212},{77, 77, 77},{0, 122, 204}},
+};
+bool theme_set;
+int theme_count = 5;
+int current_theme;
 
 int main(void) {
     begin();
@@ -79,11 +101,7 @@ int main(void) {
     gfx_ZeroScreen();
     gfx_SetDrawBuffer();
 
-    gfx_palette[BG] = gfx_RGBTo1555(0, 0, 0);
-    // Primary Foreground
-    gfx_palette[FGP] = gfx_RGBTo1555(255, 255, 255);
-    // Secondary Foreground
-    gfx_palette[FGS] = gfx_RGBTo1555(155, 211, 221);
+    set_theme();
 
     gfx_SetFontData(font);
     gfx_SetMonospaceFont(8);
@@ -104,8 +122,12 @@ void begin() {
     update = true;
     scientific = true;
     second = false;
+    alpha = false;
     undo = false;
     radians = true;
+
+    theme_set = false;
+    current_theme = 0;
     clear();
 }
 
@@ -126,6 +148,36 @@ bool step() {
         second = !second;
         update = true;
         return true;
+    }
+    
+    if (key == sk_Alpha) {
+        alpha = !alpha;
+        theme_set = false;
+        update = true;
+        return true;
+    }
+
+    if (alpha) {
+        if (key == sk_Window) {
+            theme_set = true;
+            update = true;
+            return true;
+        } 
+    }
+
+    if (theme_set) {
+        if (key == sk_Up) {
+            current_theme = (current_theme + 1) % theme_count;
+            set_theme();
+            update = true;
+            return true;
+        }
+        if (key == sk_Enter) {
+            theme_set = false;
+            alpha = false;
+            update = true;
+            return true;
+        }
     }
 
     if (second) {
@@ -434,10 +486,10 @@ void draw() {
         gfx_FillRectangle(0, 220, GFX_LCD_WIDTH, 20);
         gfx_SetTextFGColor(BG);
         gfx_PrintStringXY(input, 0, 222);
-        gfx_SetTextFGColor(FG);
+        gfx_SetTextFGColor(TXT);
     } else {
         gfx_Line(0, 220, GFX_LCD_WIDTH, 220);
-        gfx_SetTextFGColor(FG);
+        gfx_SetTextFGColor(TXT);
         gfx_PrintStringXY(input, 0, 222);
     }
 
@@ -458,6 +510,17 @@ void draw() {
         i--;
     }
     update = false;
+}
+
+void set_theme() {
+    // Background
+    gfx_palette[BG] = gfx_RGBTo1555(themes[current_theme][BG][0], themes[current_theme][BG][1], themes[current_theme][BG][2]);
+    // Primary Foreground
+    gfx_palette[FGP] = gfx_RGBTo1555(themes[current_theme][FGP][0], themes[current_theme][FGP][1], themes[current_theme][FGP][2]);
+    // Secondary Foreground
+    gfx_palette[FGS] = gfx_RGBTo1555(themes[current_theme][FGS][0], themes[current_theme][FGS][1], themes[current_theme][FGS][2]);
+    // Text
+    gfx_palette[TXT] = gfx_RGBTo1555(themes[current_theme][TXT][0], themes[current_theme][TXT][1], themes[current_theme][TXT][2]);
 }
 
 void end() {
