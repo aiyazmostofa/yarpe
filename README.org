@@ -69,15 +69,15 @@ But you can also press the =(=, which is a lot easier to reach.
 
 *** Color Themes
 Color Themes can be set by pressing =alpha= then =window= and then you can scroll through the themes
-using the up key. To set the selected theme, press the enter key.
+using the =up= key. To set the selected theme, press =enter=.
 
-| Color Theme  | Index |
-|--------------+-------|
-| Default      | 0     |
-| Monkeytype   | 1     |
-| Dracula      | 2     |
-| Gruvbox      | 3     |
-| Vscode       | 4     |
+| Color Theme  |
+|--------------+
+| Default      |
+| Monkeytype   |
+| Dracula      |
+| Gruvbox      |
+| Vscode       |
 
 ** Build
 Install the toolchain using this link [[https://ce-programming.github.io/toolchain/static/getting-started.html][here]]. 
