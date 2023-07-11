@@ -77,7 +77,7 @@ bool scientific;
 bool radians;
 
 // Themes
-char themes [5][4][3] = {
+char themes [][4][3] = {
     // Layout: Background, Primary Foreground, Secondary Foreground, Text Color
 
     // Default
@@ -88,11 +88,9 @@ char themes [5][4][3] = {
     {{40, 42, 54}, {98, 114, 164}, {68, 71, 90}, {189, 147, 249}},
     // Gruvbox
     {{40, 40, 40}, {152, 151, 26}, {251, 73, 52}, {235, 219, 178}},
-    // Vscode
-    {{30, 30, 30},{212, 212, 212},{77, 77, 77},{0, 122, 204}},
 };
 bool theme_set;
-int theme_count = 5;
+int theme_count = sizeof(themes) / (12 * sizeof(char));
 int current_theme;
 
 int main(void) {

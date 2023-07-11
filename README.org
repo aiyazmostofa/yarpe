@@ -77,7 +77,6 @@ using the =up= key. To set the selected theme, press =enter=.
 | Monkeytype   |
 | Dracula      |
 | Gruvbox      |
-| Vscode       |
 
 ** Build
 Install the toolchain using this link [[https://ce-programming.github.io/toolchain/static/getting-started.html][here]]. 
