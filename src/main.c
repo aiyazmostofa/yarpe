@@ -1,4 +1,5 @@
 #include <graphx.h>
+#include <fileioc.h>
 #include <ti/real.h>
 #include <ti/getcsc.h>
 #include "THIN_SS.h"
@@ -92,6 +93,8 @@ char themes [][4][3] = {
 bool theme_set;
 int theme_count = sizeof(themes) / (12 * sizeof(char));
 int current_theme;
+int saved_theme;
+uint8_t theme_appvar_handle;
 
 int main(void) {
     begin();
@@ -125,7 +128,13 @@ void begin() {
     radians = true;
 
     theme_set = false;
-    current_theme = 0;
+    theme_appvar_handle = ti_Open("RPNTHEME", "r");
+    if (theme_appvar_handle == 0) {
+        current_theme = 0;
+    } else {
+        size_t elements_written = ti_Read(&current_theme, sizeof(int), 1, theme_appvar_handle);
+    }
+    int close_error = ti_Close(theme_appvar_handle);
     clear();
 }
 
@@ -172,6 +181,10 @@ bool step() {
         }
         if (key == sk_Enter) {
             theme_set = false;
+            uint8_t handle = ti_Open("RPNTHEME", "w");
+            size_t elements_written = ti_Write(&current_theme, sizeof(int), 1, handle);
+            int close_error = ti_Close(handle);
+
             alpha = false;
             update = true;
             return true;
@@ -522,5 +535,4 @@ void set_theme() {
 }
 
 void end() {
-
 }
