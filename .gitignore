@@ -1,0 +1,10 @@
+bin
+obj
+
+*.8xp
+*.map
+*.bin
+
+*.bc
+*.c.bc
+*.src
