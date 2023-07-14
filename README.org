@@ -94,7 +94,7 @@ For example, =1= =vars= =2= =vars= =3= =vars= =prgm= will lead to this as the st
   INPUT
 #+END_SRC
 Below the Radians/Degree indicator is the size of the queue. 
-This is useful when you want to do a lot of calculations at once but you don't want to clutter the stack.
+The queue is useful when you want to do a lot of calculations at once but you don't want to clutter the stack.
 
 ** Build
 Install the toolchain using this link [[https://ce-programming.github.io/toolchain/static/getting-started.html][here]]. 
