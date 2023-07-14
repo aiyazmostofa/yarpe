@@ -44,7 +44,9 @@ These are functions that require no shift (second) key to be pressed first.
 | Radians / Degree    | =apps=         |
 | Scientific / Normal | =mode=         |
 | Reciprocal          | =x^-1=         |
-| EE (Read Below)     | =comma=     |
+| EE (Read Below)     | =comma=        |
+| Add (Queue)         | =vars=         |
+| Poll (Queue)        | =prgm=         |
 
 For the EE function, say you want to type =3.65×10^4=, here are the buttons you want to press:
 =3= =.= =6= =5= =enter= =4= =comma=
@@ -72,11 +74,27 @@ Color Themes can be set by pressing =alpha= then =window= and then you can scrol
 using the =up= key. To set the selected theme, press =enter=.
 
 | Color Theme  |
-|--------------+
+|--------------|
 | Default      |
 | Monkeytype   |
 | Dracula      |
 | Gruvbox      |
+
+*** Queue
+In addition to the main stack, there is a background "queue".
+You can add to this queue by pressing =vars=.
+Then, to poll all of the elements at once into the stack, you can press =prgm=.
+For example, =1= =vars= =2= =vars= =3= =vars= =prgm= will lead to this as the stack.
+#+BEGIN_SRC
+  ...
+  1
+  2
+  3
+  -----
+  INPUT
+#+END_SRC
+Below the Radians/Degree indicator is the size of the queue. 
+This is useful when you want to do a lot of calculations at once but you don't want to clutter the stack.
 
 ** Build
 Install the toolchain using this link [[https://ce-programming.github.io/toolchain/static/getting-started.html][here]]. 
