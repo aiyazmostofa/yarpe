@@ -23,30 +23,31 @@ You will also need to install this. [[https://github.com/CE-Programming/librarie
 *** Primary Functions
 These are functions that require no shift (second) key to be pressed first.
 
-| Function            | Keys           |
-|---------------------+----------------|
-| Push                | =enter=        |
-| Add                 | =+=            |
-| Subtract            | =-= (Subtract) |
-| Negate              | =-= (Negate)   |
-| Multiply            | =×=            |
-| Divide              | =÷=            |
-| Exponent            | =^=            |
-| Backspace           | =)= or =del=   |
-| Clear Input         | =clear=        |
-| Square              | =x^2=          |
-| Log Base 10         | =log=          |
-| Natural Log         | =ln=           |
-| Sin                 | =sin=          |
-| Cos                 | =cos=          |
-| Tan                 | =tan=          |
-| Decimal             | =.=            |
-| Radians / Degree    | =apps=         |
-| Scientific / Normal | =mode=         |
-| Reciprocal          | =x^-1=         |
-| EE (Read Below)     | =comma=        |
-| Add (Queue)         | =vars=         |
-| Poll (Queue)        | =prgm=         |
+| Function              | Keys           |
+|-----------------------+----------------|
+| Push                  | =enter=        |
+| Add                   | =+=            |
+| Subtract              | =-= (Subtract) |
+| Negate                | =-= (Negate)   |
+| Multiply              | =×=            |
+| Divide                | =÷=            |
+| Exponent              | =^=            |
+| Backspace             | =)= or =del=   |
+| Clear Input           | =clear=        |
+| Square                | =x^2=          |
+| Log Base 10           | =log=          |
+| Natural Log           | =ln=           |
+| Sin                   | =sin=          |
+| Cos                   | =cos=          |
+| Tan                   | =tan=          |
+| Decimal               | =.=            |
+| Radians / Degree      | =apps=         |
+| Scientific / Normal   | =mode=         |
+| Reciprocal            | =x^-1=         |
+| EE (Read Below)       | =comma=        |
+| Swap 2 Front Elements | =down=         |
+| Add (Queue)           | =vars=         |
+| Poll (Queue)          | =prgm=         |
 
 For the EE function, say you want to type =3.65×10^4=, here are the buttons you want to press:
 =3= =.= =6= =5= =enter= =4= =comma=
