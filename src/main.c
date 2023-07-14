@@ -1,5 +1,6 @@
 #include <graphx.h>
 #include <fileioc.h>
+#include <stdio.h>
 #include <ti/real.h>
 #include <ti/getcsc.h>
 #include "THIN_SS.h"
@@ -10,20 +11,25 @@
 #define TXT 3
 
 #define STACK_SIZE 100
+#define QUEUE_SIZE 50
 #define INPUT_SIZE 20
 
 // RPN
 char input[INPUT_SIZE + 1];
 real_t stack[STACK_SIZE];
+real_t queue[QUEUE_SIZE];
 int inputIndex;
 int stackIndex;
+int queueIndex;
 bool containsDecimal;
 bool negativeInput;
 
 char backup_input[INPUT_SIZE + 1];
 real_t backup_stack[STACK_SIZE];
+real_t backup_queue[QUEUE_SIZE];
 int backup_inputIndex;
 int backup_stackIndex;
+int backup_queueIndex;
 bool backup_containsDecimal;
 bool backup_negativeInput;
 
@@ -35,6 +41,8 @@ bool back();
 bool clear();
 bool negate();
 bool delete();
+bool add();
+bool poll();
 void backup();
 bool restore();
 
@@ -120,6 +128,7 @@ int main(void) {
 
 void begin() {
     stackIndex = 0;
+    queueIndex = 0;
     update = true;
     scientific = true;
     second = false;
@@ -218,6 +227,7 @@ bool step() {
 
     if (key == sk_Enter && push()) update = true;
     if (key == sk_Clear && clear()) update = true;
+    if (key == sk_Prgm && poll()) update = true;
     if ((key == sk_RParen || key == sk_Del) && back()) update = true;
     if (key == sk_Chs && negate()) update = true;
     if (key == sk_0 && append('0')) update = true;
@@ -236,6 +246,8 @@ bool step() {
         radians = !radians;
         update = true;
     }
+
+    if (key == sk_Vars && prepare(1) && add()) update = true;
 
     if (key == sk_Add && prepare(2) && calc_add()) update = true;
     if (key == sk_Sub && prepare(2) && calc_sub()) update = true;
@@ -315,6 +327,22 @@ bool negate() {
     return true;
 }
 
+bool add() {
+    if (queueIndex == QUEUE_SIZE) return false;
+    queue[queueIndex++] = stack[--stackIndex];
+    return true;
+}
+
+bool poll() {
+    if (queueIndex == 0 || STACK_SIZE - stackIndex < queueIndex) return false;
+    backup();
+    for (int i = 0; i < queueIndex; i++) {
+        stack[stackIndex++] = queue[i];
+    }
+    queueIndex = 0;
+    return true;
+}
+
 void backup() {
     undo = true;
     for (int i = 0; i <= INPUT_SIZE; i++) {
@@ -325,29 +353,38 @@ void backup() {
         backup_stack[i] = stack[i];
     }
 
+    for (int i = 0; i < QUEUE_SIZE; i++) {
+        backup_queue[i] = queue[i];
+    }
+
     backup_inputIndex = inputIndex;
     backup_stackIndex = stackIndex;
+    backup_queueIndex = queueIndex;
     backup_containsDecimal = containsDecimal;
     backup_negativeInput = negativeInput;
 }
 
 bool restore() {
-    if (undo) {
-        undo = false;
-        for (int i = 0; i <= INPUT_SIZE; i++) {
-            input[i] = backup_input[i];
-        }
-
-        for (int i = 0; i < STACK_SIZE; i++) {
+    if (!undo) return false;
+    undo = false;
+    for (int i = 0; i <= INPUT_SIZE; i++) {
+        input[i] = backup_input[i];
+    }
+    
+    for (int i = 0; i < STACK_SIZE; i++) {
             stack[i] = backup_stack[i];
-        }
-
-        inputIndex = backup_inputIndex;
-        stackIndex = backup_stackIndex;
-        containsDecimal = backup_containsDecimal;
-        negativeInput = backup_negativeInput;
-        return true;
-    } else return false;
+    }
+    
+    for (int i = 0; i < QUEUE_SIZE; i++) {
+        queue[i] = backup_queue[i];
+    }
+    
+    inputIndex = backup_inputIndex;
+    stackIndex = backup_stackIndex;
+    queueIndex = backup_queueIndex;
+    containsDecimal = backup_containsDecimal;
+    negativeInput = backup_negativeInput;
+    return true;
 }
 
 bool calc_add() {
@@ -507,6 +544,18 @@ void draw() {
     // Radians/degree toggle display
     if (radians) gfx_PrintStringXY("R", 304, 0);
     else gfx_PrintStringXY("D", 304, 0);
+
+    if (queueIndex >= 10) {
+        char str[3];
+        str[2] = '\0';
+        sprintf(str, "%d", queueIndex);
+        gfx_PrintStringXY(str, 288, 16);
+    } else {
+        char str[2];
+        str[1] = '\0';
+        sprintf(str, "%d", queueIndex);
+        gfx_PrintStringXY(str, 304, 16);
+    }
 
     // Stack
     int i = stackIndex - 1;
