@@ -41,6 +41,7 @@ bool back();
 bool clear();
 bool negate();
 bool delete();
+bool swap();
 bool add();
 bool poll();
 void backup();
@@ -178,7 +179,7 @@ bool step() {
             theme_set = true;
             update = true;
             return true;
-        } 
+        }
     }
 
     if (theme_set) {
@@ -248,6 +249,7 @@ bool step() {
     }
 
     if (key == sk_Vars && prepare(1) && add()) update = true;
+    if (key == sk_Down && prepare(2) && swap()) update = true;
 
     if (key == sk_Add && prepare(2) && calc_add()) update = true;
     if (key == sk_Sub && prepare(2) && calc_sub()) update = true;
@@ -324,6 +326,14 @@ bool negate() {
         backup();
         stack[stackIndex - 1] = os_RealNeg(&stack[stackIndex - 1]);
     } else return false;
+    return true;
+}
+
+bool swap() {
+    real_t temp = stack[stackIndex-1];
+    stack[stackIndex-1] = stack[stackIndex-2];
+    stack[stackIndex-2] = temp;
+    temp = os_RealLog(&temp);
     return true;
 }
 
