@@ -44,6 +44,8 @@ bool delete();
 bool swap();
 bool add();
 bool poll();
+void writeQueue();
+void readQueue();
 void backup();
 bool restore();
 
@@ -145,6 +147,7 @@ void begin() {
         size_t elements_written = ti_Read(&current_theme, sizeof(int), 1, theme_appvar_handle);
     }
     int close_error = ti_Close(theme_appvar_handle);
+    readQueue();
     clear();
 }
 
@@ -340,6 +343,7 @@ bool swap() {
 bool add() {
     if (queueIndex == QUEUE_SIZE) return false;
     queue[queueIndex++] = stack[--stackIndex];
+    writeQueue();
     return true;
 }
 
@@ -350,7 +354,33 @@ bool poll() {
         stack[stackIndex++] = queue[i];
     }
     queueIndex = 0;
+    writeQueue();
     return true;
+}
+
+void writeQueue() {
+    uint8_t handle = ti_Open("QUEUE", "w");
+    size_t elements_written = ti_Write(&queue, sizeof(real_t[QUEUE_SIZE]), 1, handle);
+    int close_error = ti_Close(handle);
+
+    handle = ti_Open("QUEUEINDEX", "w");
+    elements_written = ti_Write(&queueIndex, sizeof(int), 1, handle);
+    close_error = ti_Close(handle);
+}
+
+void readQueue() {
+    uint8_t handle = ti_Open("QUEUE", "r");
+    if (handle != 0) {
+        size_t elements_written = ti_Read(&queue, sizeof(real_t[QUEUE_SIZE]), 1, handle);
+    }
+    int close_error = ti_Close(handle);
+
+
+    handle = ti_Open("QUEUEINDEX", "r");
+    if (handle != 0) {
+        size_t elements_written = ti_Read(&queueIndex, sizeof(int), 1, handle);
+    }
+    close_error = ti_Close(handle);
 }
 
 void backup() {
